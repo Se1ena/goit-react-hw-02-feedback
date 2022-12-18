@@ -1,66 +1,25 @@
 import React from 'react';
-import css from 'components/Statistics/Statistics.module.css';
+import PropTypes from 'prop-types';
+import { List, ListItem } from './Statistics.styled';
 
-class Feedback extends React.Component {
-    static defaultProps = {
-        initialValue: 0,
+
+export const Statistics = ({ good, neutral, bad, total, positivePercentage }) => {
+    return <List>
+      <ListItem>Good: {good}</ListItem>
+      <ListItem>Neutral: {neutral}</ListItem>
+      <ListItem>Bad: {bad}</ListItem>
+      <ListItem>Total: {total}</ListItem>
+      <ListItem>Positive feedback: {positivePercentage}%</ListItem>
+    </List>;
+  };
+
+Statistics.propTypes = {
+    good: PropTypes.number.isRequired,
+    neutral: PropTypes.number.isRequired,
+    bad: PropTypes.number.isRequired,
+    total: PropTypes.number.isRequired,
+    positivePercentage: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]).isRequired,
     };
-
-    static propTypes = {
-        //
-    }
-
-    state = {
-        good: this.props.initialValue,
-        neutral: this.props.initialValue,
-        bad: this.props.initialValue,
-        total: this.props.initialValue,
-        positiveFeedback: this.props.initialValue,
-    };
-
-    handleEncrementGood = () => {
-        this.setState(prevState => ({
-            good: prevState.good + 1,
-        }));
-    };
-
-    handleEncrementNeutral = () => {
-        this.setState(prevState => ({
-            neutral: prevState.neutral + 1,
-        }));
-    };
-
-    handleEncrementBad = () => {
-        this.setState(prevState => ({
-            bad: prevState.bad + 1,
-        }));
-    };
-
-
-    countTotalFeedback = () => {
-        this.setState(prevState => ({
-            total: prevState.good + prevState.neutral + prevState.bad,
-        }));
-    };
-
-
-    render() {
-        return(
-            <div className='Feedback'>
-        <span className='Feedback__value'>Good: {this.state.good}</span>
-        <span className='Feedback__value'>Neutral: {this.state.neutral}</span>
-        <span className='Feedback__value'>Bad: {this.state.bad}</span>
-        <span className='Feedback__value'>Total: {this.state.total}</span>
-        <span className='Feedback__value'>Positive feedback: {this.state.positiveFeedback}</span>
-
-        <div className='Feedback__controls'>
-        <button type='button' onClick={this.handleEncrementGood}>Good</button>
-        <button type='button' onClick={this.handleEncrementNeutral}>Neutral</button>
-        <button type='button' onClick={this.handleEncrementBad}>Bad</button>
-        </div>
-    </div>
-        );
-    }
-}
-
-export default Feedback;
